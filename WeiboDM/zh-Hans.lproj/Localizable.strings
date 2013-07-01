@@ -1,0 +1,51 @@
+/* 
+  Localizable.strings
+  pento
+
+  Created by Eric Li on 13-4-18.
+  Copyright (c) 2013年 Pento. All rights reserved.
+*/
+
+"Release to refresh..." = "松开即可更新...";
+"Pull down to refresh..." = "下拉可以刷新...";
+"Loading..." = "加载中...";
+"Last Updated" = "上次更新";
+
+//filters
+"Image Filter" = "Image Filter";
+"Normal" = "Normal";
+"Vivid" = "Vivid";
+"Polaroid" = "Polaroid";
+"Cyan" = "Cyan";
+"Sunset" = "Sunset";
+"Nostalgic" = "Nostalgic";
+"Nashville" = "Nashville";
+"Amatorka" = "Amatorka";
+"Rose" = "Rose";
+"H-Light" = "H-Light";
+"Sundae" = "Sundae";
+"Etikate" = "Etikate";
+"Moss" = "Moss";
+"1990s" = "1990s";
+"1980s" = "1980s";
+"1970s" = "1970s";
+"L-Green" = "L-Green";
+"Light" = "Light";
+"Tangerine" = "Tangerine";
+"Afternoon" = "Afternoon";
+"Bright" = "Bright";
+"Green" = "Green";
+"Inkwell" = "Inkwell";
+"Old Days" = "Old Days";
+"Yellowing" = "Yellowing";
+"Comic" = "Comic";
+"Cartoon" = "Cartoon";
+"Whisper" = "Whisper";
+"Palm" = "Palm";
+"B&W" = "B&W";
+"Sketch" = "Sketch";
+"Negative" = "Negative";
+"Lattice" = "Lattice";
+"Shadow" = "Shadow";
+"Engraving" = "Engraving";
+"Relief" = "Relief";

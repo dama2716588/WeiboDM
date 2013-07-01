@@ -1,0 +1,25 @@
+//
+// Prefix header for all source files of the 'WeiboDM' target in the 'WeiboDM' project
+//
+
+#import <Availability.h>
+#import "Header.h"
+#import "UIView+PTHelper.h"
+#import "NSObject+Additions.h"
+#import "UIViewAdditions.h"
+#import "Helper.h"
+#import "UIImageView+WebCache.h"
+#import "UIView+Animate.h"
+#import "MBProgressHUD.h"
+#import "SynthesizeSingleton.h"
+#import "DataCenter.h"
+#import "NSStringAdditions.h"
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iOS SDK 3.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+#endif

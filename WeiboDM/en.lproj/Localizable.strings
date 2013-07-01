@@ -1,0 +1,46 @@
+/* 
+  Localizable.strings
+  pento
+
+  Created by Eric Li on 13-4-18.
+  Copyright (c) 2013年 Pento. All rights reserved.
+*/
+
+//Filters
+"Image Filter" = "选择滤镜";
+"Normal" = "原图";
+"Vivid" = "鲜艳";
+"Polaroid" = "宝丽来";
+"Cyan" = "青版";
+"Sunset" = "夕阳";
+"Nostalgic" = "怀旧";
+"Nashville" = "纳什维尔";
+"Amatorka" = "爱人";
+"Rose" = "玫红";
+"H-Light" = "高光";
+"Sundae" = "圣代";
+"Etikate" = "艾蒂卡";
+"Moss" = "青苔";
+"1990s" = "90年代";
+"1980s" = "80年代";
+"1970s" = "70年代";
+"L-Green" = "浅绿";
+"Light" = "灯光";
+"Tangerine" = "橘红";
+"Afternoon" = "午后";
+"Bright" = "亮丽";
+"Green" = "绿霞";
+"Inkwell" = "墨水渲染";
+"Old Days" = "流金岁月";
+"Yellowing" = "泛黄";
+"Comic" = "漫画书";
+"Cartoon" = "黑白卡通";
+"Whisper" = "细语";
+"Palm" = "棕榈";
+"B&W" = "黑白";
+"Sketch" = "素描";
+"Negative" = "负片";
+"Lattice" = "点阵";
+"Shadow" = "阴影";
+"Engraving" = "版画";
+"Relief" = "浮雕";
