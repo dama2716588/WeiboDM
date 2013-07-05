@@ -23,8 +23,8 @@
     
     else if ([key isEqualToString:@"text"]) {
         self.text = [self addTagA:value];
-    }    
-    
+    }
+        
     else if ([key isEqualToString:@"user"]) {
         _sinaUser = [[SinaUserModel alloc] initWithDictionary:value];
     } else {

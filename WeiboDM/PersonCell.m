@@ -8,6 +8,13 @@
 
 #import "PersonCell.h"
 #import "GHImagePreView.h"
+#import "ScrollWebImageView.h"
+
+#define BOOK_COVER_LR 10 //控制左右间隔
+#define BOOK_COVER_UD 10 //控制上下间隔
+#define COVER_WIDTH 50
+#define COVER_HEIGHT 50
+#define FIRST_COVER_MARGIN 0
 
 @implementation PersonCell
 {
@@ -26,6 +33,14 @@
     UILabel*_timeLable;
     CGFloat imageScale;
     CGFloat repostImageScale;
+    
+    CGFloat _lastWidth;
+    CGFloat _coverHeight;
+    UIView *_multiImagesView;
+    
+    NSMutableArray *_multiImagesArray;
+    NSArray *_urls;
+    int _currentPreview;
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -54,7 +69,7 @@
     _originLabel.textColor = [UIColor blackColor];    
     
     _originImageView = [[UIImageView alloc] init];
-    _originImageView.backgroundColor = [UIColor whiteColor];
+    _originImageView.backgroundColor = [UIColor clearColor];
     [_originImageView setClipsToBounds:YES];
     _originImageView.contentMode = UIViewContentModeScaleAspectFill;
 
@@ -73,7 +88,7 @@
     _repostLabel.textColor = [UIColor blackColor];
 
     _repostImageView = [[UIImageView alloc] init];
-    _repostImageView.backgroundColor = [UIColor whiteColor];
+    _repostImageView.backgroundColor = [UIColor clearColor];
     [_repostImageView setClipsToBounds:YES];
     _repostImageView.userInteractionEnabled = YES;
     _repostImageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -104,6 +119,9 @@
     _timeLable.backgroundColor = [UIColor clearColor];
     _timeLable.textColor = [UIColor lightGrayColor];
     _timeLable.font = T12_FONT;
+    
+    _multiImagesView = [[UIView alloc] init];
+    _multiImagesArray = [[NSMutableArray alloc] init];
     
     [self addSubview:_originLabel];
     [self addSubview:_originImageView];
@@ -151,6 +169,7 @@
 
 -(void)updateCellWithData:(SinaWeiboModel *)model
 {
+    
     _SinaWeiboModel = model;
     
     NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:_SinaWeiboModel.text];
@@ -163,37 +182,19 @@
         _repostLabel.attributedText = textR;
     }
     
-    __block UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    activityIndicator.frame = CGRectMake(0, 0, 80, 80);
-    activityIndicator.center = _originImageView.center;
-    activityIndicator.backgroundColor = [UIColor clearColor];
-    activityIndicator.hidesWhenStopped = YES;
-    [activityIndicator startAnimating];
-    [_originImageView addSubview:activityIndicator];
-        
     [_originImageView setImageWithURL:[NSURL URLWithString:_SinaWeiboModel.bmiddle_pic]
                             completed:^(UIImage *image,NSError *error,SDImageCacheType type){
-                                [activityIndicator removeFromSuperview];
                                 imageScale = 100/image.size.height;
                                 _originImageView.image = image;
                                 [self setNeedsLayout];                                
     }];
     
-    __block UIActivityIndicatorView *activityIndicator2 = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    activityIndicator2.frame = CGRectMake(0, 0, 80, 80);
-    activityIndicator2.center = _originImageView.center;
-    activityIndicator2.backgroundColor = [UIColor clearColor];
-    activityIndicator2.hidesWhenStopped = YES;
-    [activityIndicator2 startAnimating];
-    [_repostImageView addSubview:activityIndicator2];    
-    
     [_repostImageView setImageWithURL:[NSURL URLWithString:_SinaWeiboModel.sinaRepost.bmiddle_pic]
                             completed:^(UIImage *image,NSError *error,SDImageCacheType type){
-                                [activityIndicator2 removeFromSuperview];
-                                repostImageScale = 80/image.size.height;
+                                 repostImageScale = 80/image.size.height;
                                 _repostImageView.image = image;
                                 [self setNeedsLayout];                                
-                            }];            
+                            }];
     
     if (_SinaWeiboModel.sinaRepost.text) {
         [_repostBg addSubview:_repostLabel];
@@ -212,6 +213,19 @@
     
     _timeLable.text = [self getFormatString:_SinaWeiboModel.created_at];
     [_timeLable sizeToFit];
+    
+    //add multi images
+    SinaWeiboModel *originModel = model.pic_urls.count >1 ? model : model.sinaRepost;
+    if (originModel.pic_urls.count > 1) {
+        [self createMultiImagesView:originModel];
+        originModel.bmiddle_pic = nil;
+    }
+    
+    if (model.pic_urls.count > 1 ) {
+        [self addSubview:_multiImagesView];
+    } else if (model.sinaRepost.pic_urls.count > 1) {
+        [_repostBg addSubview:_multiImagesView];
+    } else {}
     
     [self setNeedsLayout];
 }
@@ -237,20 +251,24 @@
     
     _originLabel.frame = CGRectMake(10, 10, 300, textSize.height);
     
+    CGFloat w1 = (self.width-GAP_20) * imageScale < self.width-GAP_20 ? (self.width-GAP_20) * imageScale : self.width-GAP_20;
+    
     if (_SinaWeiboModel.bmiddle_pic) {
-        _originImageView.frame = CGRectMake(GAP_10, GAP_10 + _originLabel.maxY , (self.width-GAP_20) * imageScale, 100);
+        _originImageView.frame = CGRectMake(GAP_10, GAP_10 + _originLabel.maxY , w1, 100);
     } else {
         _originImageView.frame = CGRectZero;
     }
-    
+        
     if(_SinaWeiboModel.sinaRepost.text){
         _repostLabel.frame = CGRectMake(GAP_10, GAP_10, self.width-GAP_40, repostSize.height);
     } else {
         _repostLabel.frame = CGRectZero;
     }
     
+    CGFloat w2 = 280*repostImageScale < 280 ? 280*repostImageScale : 280;
+    
     if (_SinaWeiboModel.sinaRepost.bmiddle_pic){
-        _repostImageView.frame = CGRectMake(GAP_10, _repostLabel.height + GAP_20, 280*repostImageScale,80);
+        _repostImageView.frame = CGRectMake(GAP_10, _repostLabel.height + GAP_20, w2,80);
     } else {
         _repostImageView.frame = CGRectZero;
     }
@@ -260,7 +278,16 @@
         _repostBg.frame = CGRectMake(GAP_10, _originLabel.maxY + GAP_10, 300, _repostLabel.maxY + _repostImageView.height + gapH);
     } else {
         _repostBg.frame = CGRectZero;
-    }    
+    }
+    
+    if (_SinaWeiboModel.pic_urls.count >1) {
+        [_multiImagesView changePosition:CGPointMake(10, _originLabel.maxY + 10)];
+    }
+    
+    if (_SinaWeiboModel.sinaRepost.pic_urls.count > 1) {
+        [_multiImagesView changePosition:CGPointMake(10, _repostLabel.maxY + 10)];
+        _repostBg.frame = CGRectMake(_repostBg.origin.x, _repostBg.origin.y, _repostBg.width, _repostBg.height + _multiImagesView.height + 10);
+    }
     
     _pinButton.frame = CGRectMake(10, self.height - GAP_40, 20, 20);
     _pinLable.center = CGPointMake(_pinButton.maxX + _pinLable.width/2 + GAP_10, _pinButton.centerY);
@@ -271,11 +298,83 @@
     _lineView.frame = CGRectMake(0, self.height-1, 320, 1);
 }
 
+- (void)createMultiImagesView:(SinaWeiboModel *)model
+{    
+    NSArray *urlsArray = model.pic_urls;
+    _urls = urlsArray;
+    CGFloat h = [[self class] getMultiImageHeight:model];
+    
+    _multiImagesView.frame = CGRectMake(0, 0, 170, h);
+    
+    _lastWidth = FIRST_COVER_MARGIN;
+    _coverHeight = 0;
+    
+    for (int j=0; j<urlsArray.count; j++)
+    {
+        if (_lastWidth + COVER_WIDTH > 200)
+        {
+            _lastWidth = FIRST_COVER_MARGIN;
+            _coverHeight += BOOK_COVER_UD + COVER_WIDTH ;
+        }
+        
+        UIImageView *bookCover = [[UIImageView alloc] init];        
+        [bookCover setImageWithURL:[NSURL URLWithString:[[urlsArray objectAtIndex:j] objectForKey:@"thumbnail_pic"]]];
+        bookCover.contentMode = UIViewContentModeScaleAspectFill;
+        bookCover.clipsToBounds = YES;
+        bookCover.frame = CGRectMake(_lastWidth, _coverHeight, COVER_WIDTH, COVER_HEIGHT);
+        bookCover.backgroundColor = [UIColor whiteColor];
+        bookCover.userInteractionEnabled = YES;
+        bookCover.tag = j;
+        [_multiImagesView addSubview:bookCover];
+        _lastWidth += COVER_WIDTH + BOOK_COVER_LR;
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickSmallImage:)];
+        [bookCover addGestureRecognizer:tap];
+        [_multiImagesArray addObject:bookCover];
+    }    
+}
+
+- (void)clickSmallImage:(UITapGestureRecognizer *)tap
+{
+    UIImageView *clickedImage = (UIImageView *)[tap view];
+    _currentPreview = clickedImage.tag;
+    NSLog(@"_currentPreview : %d",_currentPreview);
+    
+    UIWindow *window = [[UIApplication sharedApplication] keyWindow];        
+    ScrollWebImageView *sw = [[ScrollWebImageView alloc] initWithFrame:window.bounds withUrls:_urls andPreImages:_multiImagesArray];
+    sw.clickedIndex = _currentPreview;
+    [sw showFromView:clickedImage];
+}
+
++ (float)getMultiImageHeight:(SinaWeiboModel *)model
+{
+    SinaWeiboModel *originModel = model.sinaRepost ? model.sinaRepost : model;
+    
+    if (originModel.pic_urls.count <= 1) {
+        return 0;
+    }
+    
+    if (originModel.pic_urls.count <= 3) {
+        return 50;
+    }
+    
+    if (originModel.pic_urls.count <= 6) {
+        return 110;
+    }
+    
+    return 170;
+}
+
 + (float)calculateCardHeight:(SinaWeiboModel *)model
 {
+    SinaWeiboModel *originModel = model.sinaRepost ? model.sinaRepost : model;
+    if (originModel.pic_urls.count > 1) {
+        originModel.bmiddle_pic = nil;
+    }    
+    
     NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:model.text];
     [text setFont:T16_FONT];    
-    CGSize textSize = [text sizeConstrainedToSize:CGSizeMake(320 - GAP_20, 300)];
+    CGSize textSize = [text sizeConstrainedToSize:CGSizeMake(320 - GAP_20, 300)];    
     
     NSMutableAttributedString *retext;
     CGSize repostSize;
@@ -309,7 +408,10 @@
         gap1 = 0;
     }
     
-    return h0 + h1 + h2 + h3 + gap1 + GAP_30*2;
+    CGFloat multiH = [[self class] getMultiImageHeight:model];
+    CGFloat gap2 = multiH > 0 ? GAP_10 : 0;
+    
+    return h0 + h1 + h2 + h3 + gap1 + GAP_30*2 + multiH + gap2;
 }
 
 @end

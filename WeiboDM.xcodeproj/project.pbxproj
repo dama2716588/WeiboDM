@@ -479,6 +479,7 @@
 		B99ED95617679ABF00BBE6B5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B99ED95517679ABE00BBE6B5 /* SystemConfiguration.framework */; };
 		B99ED97017689C6500BBE6B5 /* NotifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B99ED96F17689C6400BBE6B5 /* NotifyViewController.m */; };
 		B99ED9731768B6A000BBE6B5 /* NotifyView.m in Sources */ = {isa = PBXBuildFile; fileRef = B99ED9721768B6A000BBE6B5 /* NotifyView.m */; };
+		B9A70FED1783F32F009FDCFF /* ScrollWebImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = B9A70FEC1783F32E009FDCFF /* ScrollWebImageView.m */; };
 		B9B6BB631761C63200782E1A /* DMService.m in Sources */ = {isa = PBXBuildFile; fileRef = B9B6BB621761C63200782E1A /* DMService.m */; };
 		B9B6BB661761CA6000782E1A /* OptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9B6BB651761CA5F00782E1A /* OptionViewController.m */; };
 		B9B6BB691761CC6B00782E1A /* UIView+Animate.m in Sources */ = {isa = PBXBuildFile; fileRef = B9B6BB681761CC6B00782E1A /* UIView+Animate.m */; };
@@ -1209,6 +1210,8 @@
 		B99ED96F17689C6400BBE6B5 /* NotifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotifyViewController.m; sourceTree = "<group>"; };
 		B99ED9711768B6A000BBE6B5 /* NotifyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotifyView.h; sourceTree = "<group>"; };
 		B99ED9721768B6A000BBE6B5 /* NotifyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotifyView.m; sourceTree = "<group>"; };
+		B9A70FEB1783F32E009FDCFF /* ScrollWebImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollWebImageView.h; sourceTree = "<group>"; };
+		B9A70FEC1783F32E009FDCFF /* ScrollWebImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollWebImageView.m; sourceTree = "<group>"; };
 		B9B6BB611761C63100782E1A /* DMService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMService.h; sourceTree = "<group>"; };
 		B9B6BB621761C63200782E1A /* DMService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMService.m; sourceTree = "<group>"; };
 		B9B6BB641761CA5F00782E1A /* OptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionViewController.h; sourceTree = "<group>"; };
@@ -1923,6 +1926,8 @@
 				B99BE890176B83C3000BD464 /* WeiboCommentCell.m */,
 				B9343E181751FD2D0041C535 /* SinaWeiboCell.h */,
 				B9343E191751FD2D0041C535 /* SinaWeiboCell.m */,
+				B9A70FEB1783F32E009FDCFF /* ScrollWebImageView.h */,
+				B9A70FEC1783F32E009FDCFF /* ScrollWebImageView.m */,
 				B99ED9711768B6A000BBE6B5 /* NotifyView.h */,
 				B99ED9721768B6A000BBE6B5 /* NotifyView.m */,
 				B99BE880176A16F5000BD464 /* MYCommentCell.h */,
@@ -2794,6 +2799,7 @@
 				B90610691770527E004BF823 /* DMStatusBar.m in Sources */,
 				B9363AF11771A7740029EFCE /* ToAWeiboViewController.m in Sources */,
 				B9363AF61771B37C0029EFCE /* NSStringAdditions.m in Sources */,
+				B9A70FED1783F32F009FDCFF /* ScrollWebImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

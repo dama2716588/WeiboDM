@@ -37,6 +37,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DMChecking)
         NSBlockOperation *main = [NSBlockOperation blockOperationWithBlock:^{
            
             while (YES) {
+                
                 if (_stopped) {
                     NSLog(@"checking is stopped");
                 } else {
@@ -49,7 +50,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DMChecking)
                 }
                 
                 NSLog(@"sleep for %d seconds", MONITOR_LOOP_INTERVAL);
-                [NSThread sleepForTimeInterval:MONITOR_LOOP_INTERVAL];                
+                [NSThread sleepForTimeInterval:MONITOR_LOOP_INTERVAL];
             }
         }];
         

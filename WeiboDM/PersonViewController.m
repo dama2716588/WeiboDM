@@ -139,7 +139,6 @@
 {
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     NSArray *commArray = [result objectForKey:@"statuses"];
-    NSLog(@"person : %@",result);
     
     if (commArray.count < COMMENTS_PER_PAGE.intValue) {
         _hasMore = NO;
@@ -147,11 +146,10 @@
     }
     
     for (NSDictionary *dic in commArray) {
-        NSLog(@"comments text : %@",[[dic objectForKey:@"text"] JSONString]);
         SinaWeiboModel *model = [[SinaWeiboModel alloc] initWithDictionary:dic];
         [_weiboArray addObject:model];
     }
-    NSLog(@"_commentsArray : %@",_weiboArray);
+
     [_tableView reloadData];
     
     _tableView.frame = CGRectMake(_tableView.origin.x, _headerView.maxY + GAP_20, _tableView.width, _tableView.contentSize.height);
@@ -187,7 +185,6 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     SinaWeiboModel *model = _weiboArray[(NSUInteger) indexPath.row];
-    NSLog(@"weibo_detail_cell_height : %f",[PersonCell calculateCardHeight:model]);
     return [PersonCell calculateCardHeight:model];
 }
 

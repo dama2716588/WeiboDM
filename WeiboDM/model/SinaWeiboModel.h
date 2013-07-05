@@ -24,6 +24,7 @@
 @property(nonatomic, strong) NSString *text;           //内容
 @property(nonatomic, strong) SinaUserModel *sinaUser;
 @property(nonatomic, strong) SinaWeiboModel *sinaRepost;
+@property(nonatomic, strong) NSArray *pic_urls;
 
 @property(nonatomic, strong) NSString *content;
 @property(nonatomic, strong) NSString *image;
