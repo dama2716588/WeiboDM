@@ -16,7 +16,7 @@
 #define COVER_HEIGHT 50
 #define FIRST_COVER_MARGIN 0
 
-@interface PersonCell()
+@interface PersonCell()  //test_branch
 
 @property (nonatomic, assign) CGFloat imageScale;
 @property (nonatomic, assign) CGFloat repostImageScale;
