@@ -16,6 +16,13 @@
 #define COVER_HEIGHT 50
 #define FIRST_COVER_MARGIN 0
 
+@interface PersonCell()
+
+@property (nonatomic, assign) CGFloat imageScale;
+@property (nonatomic, assign) CGFloat repostImageScale;
+
+@end
+
 @implementation PersonCell
 {
     OHAttributedLabel *_originLabel;
@@ -31,8 +38,8 @@
     UILabel *_pinLable;
     UILabel *_zhuanLabel;
     UILabel*_timeLable;
-    CGFloat imageScale;
-    CGFloat repostImageScale;
+//    CGFloat imageScale;
+//    CGFloat repostImageScale;
     
     CGFloat _lastWidth;
     CGFloat _coverHeight;
@@ -182,18 +189,23 @@
         _repostLabel.attributedText = textR;
     }
     
+    
+    __weak __block PersonCell *selfRef = self;
+    __weak __block UIImageView *_originImageViewRef = _originImageView;
+    __weak __block UIImageView *_repostImageViewRef = _repostImageView;
+        
     [_originImageView setImageWithURL:[NSURL URLWithString:_SinaWeiboModel.bmiddle_pic]
                             completed:^(UIImage *image,NSError *error,SDImageCacheType type){
-                                imageScale = 100/image.size.height;
-                                _originImageView.image = image;
-                                [self setNeedsLayout];                                
+                                selfRef.imageScale = 100/image.size.height;
+                                _originImageViewRef.image = image;
+                                [selfRef setNeedsLayout];
     }];
     
     [_repostImageView setImageWithURL:[NSURL URLWithString:_SinaWeiboModel.sinaRepost.bmiddle_pic]
                             completed:^(UIImage *image,NSError *error,SDImageCacheType type){
-                                 repostImageScale = 80/image.size.height;
-                                _repostImageView.image = image;
-                                [self setNeedsLayout];                                
+                                 selfRef.repostImageScale = 80/image.size.height;
+                                _repostImageViewRef.image = image;
+                                [selfRef setNeedsLayout];
                             }];
     
     if (_SinaWeiboModel.sinaRepost.text) {
@@ -251,7 +263,7 @@
     
     _originLabel.frame = CGRectMake(10, 10, 300, textSize.height);
     
-    CGFloat w1 = (self.width-GAP_20) * imageScale < self.width-GAP_20 ? (self.width-GAP_20) * imageScale : self.width-GAP_20;
+    CGFloat w1 = (self.width-GAP_20) * self.imageScale < self.width-GAP_20 ? (self.width-GAP_20) * self.imageScale : self.width-GAP_20;
     
     if (_SinaWeiboModel.bmiddle_pic) {
         _originImageView.frame = CGRectMake(GAP_10, GAP_10 + _originLabel.maxY , w1, 100);
@@ -265,7 +277,7 @@
         _repostLabel.frame = CGRectZero;
     }
     
-    CGFloat w2 = 280*repostImageScale < 280 ? 280*repostImageScale : 280;
+    CGFloat w2 = 280*self.repostImageScale < 280 ? 280*self.repostImageScale : 280;
     
     if (_SinaWeiboModel.sinaRepost.bmiddle_pic){
         _repostImageView.frame = CGRectMake(GAP_10, _repostLabel.height + GAP_20, w2,80);
