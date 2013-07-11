@@ -9,6 +9,7 @@
 #import "SinaWeiboCell.h"
 #import "MainViewController.h"
 #import "GHImagePreView.h"
+#import "Helper.h"
 
 #define sinaWeiboMaxTextHeight 360
 #define imageViewHeight 200
@@ -118,7 +119,19 @@
     
     _pinTimeLabel.text = [Helper getPinTimeString:[self getFormatString:_model.created_at]];
     [_pinTimeLabel sizeToFit];
-    [_imageView setImageWithURL:[NSURL URLWithString:originalWeibo.bmiddle_pic] placeholderImage:nil];    
+    
+    NSURL *url = [NSURL URLWithString:originalWeibo.bmiddle_pic];    
+    __weak UIImageView *_imageViewRef = _imageView;
+    [_imageView setImageWithURL:url placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+        if (image) {
+            [_imageViewRef setAlpha:0.0f];
+            [UIView beginAnimations:nil context:nil];
+            [UIView setAnimationDuration:0.8f];
+            [_imageViewRef setAlpha:1.0f];
+            [UIView commitAnimations];
+        }
+    }];
+    
     UITapGestureRecognizer *tapImage = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickImage:)];
     [_imageView addGestureRecognizer:tapImage];
         
@@ -132,8 +145,22 @@
     
     _userNameLabel.text = subTitle;
     [_userNameLabel sizeToFit];
-    [_userIconImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",_model.sinaUser.profile_image_url]] placeholderImage:[UIImage imageNamed:@"default_avatar_icon.png"]];
     
+    NSURL *userIconUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@",_model.sinaUser.profile_image_url]];
+    UIImage *userImage = [UIImage imageNamed:@"default_avatar_icon.png"];    
+    __weak UIImageView *userImageView = _userIconImageView;
+    [_userIconImageView setImageWithURL:userIconUrl placeholderImage:userImage completed:^(UIImage *fImage,NSError *error,SDImageCacheType type)
+     {
+         if (fImage != nil)
+         {
+             [userImageView setAlpha:0.0f];
+             [UIView beginAnimations:nil context:nil];
+             [UIView setAnimationDuration:0.8f];
+             [userImageView setAlpha:1.0f];
+             [UIView commitAnimations];
+         }
+     }];
+        
     [self setNeedsDisplay];    
 }
 
