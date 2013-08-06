@@ -124,7 +124,7 @@ static float CELL_WIDTH = 0;
 - (void)getUnreadWeibo:(NSNotification *)notify
 {
     [_dmStatusBar hide];    
-    [self getWeiboData:nil frame:CGRectZero];
+    [self refreshDataWithHUD:[NSNumber numberWithBool:NO]];
 }
 
 - (id)initWithType:(SinaWeiboType *)type
