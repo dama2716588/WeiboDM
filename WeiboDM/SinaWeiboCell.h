@@ -19,5 +19,7 @@
 @interface SinaWeiboCell:PSUICollectionViewCell <OHAttributedLabelDelegate>
 - (void)updateCellWithData:(SinaWeiboModel *)model;
 + (float)calculateCardHeight:(SinaWeiboModel *)model;
+
 @property (nonatomic, assign) NSObject<SinaWeiboCellDelegate> *delegate;
+@property (nonatomic, retain) UIImage *repostBGImage;
 @end

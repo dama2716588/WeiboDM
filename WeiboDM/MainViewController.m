@@ -17,6 +17,8 @@
 #import "SendWeiboViewController.h"
 #import "DMStatusBar.h"
 
+#define RLOAD_BUTTON_TAG 20000
+
 @interface MainViewController ()
 
 @end
@@ -79,6 +81,10 @@ static float CELL_WIDTH = 0;
     }
     
     return self;
+}
+
+-(NSUInteger)supportedInterfaceOrientations{
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 - (void)toNotifyCenter
@@ -391,10 +397,30 @@ static float CELL_WIDTH = 0;
 -(void)request:(SinaWeiboRequest *)request didFailWithError:(NSError *)error
 {
     [_sinaRequests removeObject:request];
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = @"加载中...";
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];    
+    hud.labelText = @"加载失败...";
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [self removeLoadingFooterView];
+    
     NSLog(@"get sinaweibo failed %@",error);
+    
+    if (_collectionViewData.count == 0) {                
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.tag = RLOAD_BUTTON_TAG;
+        button.frame = CGRectMake(0, 0, 200, 80);
+        button.center = self.view.centerOfView;
+        [button setTitle:@"重新加载 ..." forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(reloadFirstTime:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:button];
+    }
+}
+
+- (void)reloadFirstTime:(id)sender
+{
+    [[self.view viewWithTag:RLOAD_BUTTON_TAG] removeFromSuperview];    
+    [self getWeiboData:nil frame:CGRectZero];
 }
 
 #pragma methods for creating and removing the header footer view

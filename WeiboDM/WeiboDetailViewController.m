@@ -94,6 +94,10 @@
     return self;
 }
 
+-(NSUInteger)supportedInterfaceOrientations{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RELOAD_COMMENT_TABLE" object:nil];        
