@@ -8,6 +8,8 @@
 
 #import "ToAWeiboViewController.h"
 
+NSString *const RELOAD_COMMENT_TABLE = @"RELOAD_COMMENT_TABLE";
+
 @interface ToAWeiboViewController ()
 
 @end
@@ -201,7 +203,7 @@
        [self dismissModalViewControllerAnimated:YES];
         
         if (_type == CommentType) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"RELOAD_COMMENT_TABLE"
+            [[NSNotificationCenter defaultCenter] postNotificationName:RELOAD_COMMENT_TABLE
                                                                 object:self
                                                               userInfo:nil];
         }

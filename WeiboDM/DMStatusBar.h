@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSString *const GET_UNREAD_WEIBO;
+
 @interface DMStatusBar : UIWindow
 {
     UILabel *_textLabel;

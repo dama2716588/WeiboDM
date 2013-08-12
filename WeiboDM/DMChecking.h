@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "PTSinaWeiboClient.h"
 
+extern NSString *const CHECKING_UNREAD_COUNT;
+
 @interface DMChecking : NSObject <SinaWeiboDelegate,SinaWeiboRequestDelegate>
 
 + (DMChecking *)sharedDMChecking;

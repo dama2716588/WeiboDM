@@ -10,6 +10,8 @@
 #import "SinaWeiboModel.h"
 #import "PTSinaWeiboClient.h"
 
+extern NSString *const RELOAD_COMMENT_TABLE;
+
 typedef enum ResponseWeiboType {
     CommentType,
     RepostType,

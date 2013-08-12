@@ -8,6 +8,8 @@
 
 #import "DMStatusBar.h"
 
+NSString *const GET_UNREAD_WEIBO = @"GET_UNREAD_WEIBO";
+
 @implementation DMStatusBar
 
 - (id)initWithFrame:(CGRect)frame{
@@ -43,7 +45,7 @@
 - (void)refreshMain:(UITapGestureRecognizer *)tap
 {
     dispatch_async(dispatch_get_main_queue(), ^() {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"GET_UNREAD_WEIBO"
+        [[NSNotificationCenter defaultCenter] postNotificationName:GET_UNREAD_WEIBO
                                                             object:self
                                                           userInfo:nil];
     });    
@@ -52,7 +54,7 @@
 - (void)clickButton:(id)sender
 {
     dispatch_async(dispatch_get_main_queue(), ^() {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"GET_UNREAD_WEIBO"
+        [[NSNotificationCenter defaultCenter] postNotificationName:GET_UNREAD_WEIBO
                                                             object:self
                                                           userInfo:nil];
     });    

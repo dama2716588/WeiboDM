@@ -100,7 +100,7 @@
 
 -(void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"RELOAD_COMMENT_TABLE" object:nil];        
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:RELOAD_COMMENT_TABLE object:nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -120,7 +120,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:237/255.0f green:237/255.0f blue:237/255.0f alpha:1.0];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTableView:) name:@"RELOAD_COMMENT_TABLE" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTableView:) name:RELOAD_COMMENT_TABLE object:nil];
 	
     _scrollView = [[UIScrollView alloc] init];
     _scrollView.backgroundColor = [UIColor clearColor];

@@ -10,6 +10,8 @@
 
 #define MONITOR_LOOP_INTERVAL       15
 
+NSString *const CHECKING_UNREAD_COUNT = @"CHECKING_UNREAD_COUNT";
+
 @implementation DMChecking
 {
     BOOL _stopped;
@@ -104,7 +106,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DMChecking)
     NSLog(@"allWeibo_unreadCount : %@",result);
     
     dispatch_async(dispatch_get_main_queue(), ^() {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"CHECKING_UNREAD_COUNT"
+        [[NSNotificationCenter defaultCenter] postNotificationName:CHECKING_UNREAD_COUNT
                                                             object:self
                                                           userInfo:result];
     });

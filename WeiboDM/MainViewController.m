@@ -16,6 +16,7 @@
 #import "NotifyViewController.h"
 #import "SendWeiboViewController.h"
 #import "DMStatusBar.h"
+#import "DMChecking.h"
 
 #define RLOAD_BUTTON_TAG 20000
 
@@ -71,8 +72,8 @@ static float CELL_WIDTH = 0;
         _badgeButton = [[NotifyView alloc] initWithTarget:self action:@selector(toNotifyCenter)];
         UIBarButtonItem * rightBtnOne = [[UIBarButtonItem alloc] initWithCustomView:_badgeButton];
         self.navigationItem.rightBarButtonItem = rightBtnOne;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNotify:) name:@"CHECKING_UNREAD_COUNT" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getUnreadWeibo:) name:@"GET_UNREAD_WEIBO" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showNotify:) name:CHECKING_UNREAD_COUNT object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getUnreadWeibo:) name:GET_UNREAD_WEIBO object:nil];
         _leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _leftButton.frame = CGRectMake(0, 0, 20, 20);
         [_leftButton setBackgroundImage:[UIImage imageNamed:@"pinglun_small_icon.png"] forState:UIControlStateNormal];
@@ -157,8 +158,8 @@ static float CELL_WIDTH = 0;
     }
     [_sinaRequests removeAllObjects];
     _sinaRequests = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"CHECKING_UNREAD_COUNT" object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GET_UNREAD_WEIBO" object:nil];    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:CHECKING_UNREAD_COUNT object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:GET_UNREAD_WEIBO object:nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated
