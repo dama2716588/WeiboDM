@@ -17,22 +17,21 @@ have to subclass UINavigationController</p>
 ### Libs :
 
 <pre>
-<p>PSTCollectionView + UICollectionViewWaterfallLayout</p>
-<p>EGO</p>
-<p>SDWebImage</p>
-<p>OHAttributedLabel</p>
-<p>GPUImage</p>
+·PSTCollectionView + UICollectionViewWaterfallLayout
+·EGO
+·SDWebImage
+·OHAttributedLabel
+·GPUImage
 </pre>
 
 ### Screen Shot:
-
-![Alt text](https://raw.github.com/dama2716588/WeiboDM/master/WeiboDM/images/screen_shot/IMG_0912.PNG "Homepage")
 <p> Homepage </p>
-![Alt text](https://raw.github.com/dama2716588/WeiboDM/master/WeiboDM/images/screen_shot/IMG_0905.PNG "Weibo Detail")
+![Alt text](https://raw.github.com/dama2716588/WeiboDM/master/WeiboDM/images/screen_shot/IMG_0912.PNG "Homepage")
 <p>Weibo Detail</p>
-![Alt text](https://raw.github.com/dama2716588/WeiboDM/master/WeiboDM/images/screen_shot/IMG_0904.PNG "MultiImages")
+![Alt text](https://raw.github.com/dama2716588/WeiboDM/master/WeiboDM/images/screen_shot/IMG_0905.PNG "Weibo Detail")
 <p>MultiImages</p>
-![Alt text](https://raw.github.com/dama2716588/WeiboDM/master/WeiboDM/images/screen_shot/IMG_0909.PNG "Browser")
+![Alt text](https://raw.github.com/dama2716588/WeiboDM/master/WeiboDM/images/screen_shot/IMG_0904.PNG "MultiImages")
 <p>Browser</p>
+![Alt text](https://raw.github.com/dama2716588/WeiboDM/master/WeiboDM/images/screen_shot/IMG_0909.PNG "Browser")
 
 
