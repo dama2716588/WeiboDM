@@ -6,12 +6,12 @@ weiboDM
 ### Tips:
 
 <pre>
-<p>* Because shouldAutorotate && supportedInterfaceOrientations ara not supportted in ios6,so 
-have to subclass UINavigationController</p>
-<p>* Use NSOperationQueue for checking the newest weibo data</p>
-<p>* UIViewAdditions Category is very important for Custom UITableViewCell</p>
-<p>* Use GPUImage for image filter</p>
-<p>* Included A Custom Browser</p>
+* Because shouldAutorotate && supportedInterfaceOrientations ara not supportted in ios6,so 
+have to subclass UINavigationController
+* Use NSOperationQueue for checking the newest weibo data
+* UIViewAdditions Category is very important for Custom UITableViewCell
+* Use GPUImage for image filter
+* Included A Custom Browser
 </pre>
 
 ### Libs :
