@@ -26,7 +26,6 @@ have to subclass UINavigationController</p>
 
 ### Screen Shot:
 
-<pre>
 ![Alt text](https://raw.github.com/dama2716588/WeiboDM/master/WeiboDM/images/screen_shot/IMG_0909.PNG "Homepage")
 <p> Homepage </p>
 ![Alt text](https://raw.github.com/dama2716588/WeiboDM/master/WeiboDM/images/screen_shot/IMG_0905.PNG "Weibo Detail")
@@ -35,6 +34,5 @@ have to subclass UINavigationController</p>
 <p>MultiImages</p>
 ![Alt text](https://raw.github.com/dama2716588/WeiboDM/master/WeiboDM/images/screen_shot/IMG_0909.PNG "Browser")
 <p>Browser</p>
-</pre>
 
 
