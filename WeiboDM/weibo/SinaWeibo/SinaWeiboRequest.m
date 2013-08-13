@@ -207,7 +207,7 @@
 }
 
 - (void)failedWithError:(NSError *)error {
-    if ([delegate respondsToSelector:@selector(request:didFailWithError:)]) {
+    if (delegate && [delegate respondsToSelector:@selector(request:didFailWithError:)]) {
         [delegate request:self didFailWithError:error];
     }
 }

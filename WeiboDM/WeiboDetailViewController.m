@@ -9,10 +9,10 @@
 #import "WeiboDetailViewController.h"
 #import "SinaCommentsModel.h"
 #import "JSONKit.h"
-#import "GHImagePreView.h"
 #import "PersonViewController.h"
 #import "ToAWeiboViewController.h"
 #import "BrowserViewController.h"
+#import "ImageDisplayController.h"
 
 #define COMMENTS_PER_PAGE @"10"
 
@@ -77,6 +77,7 @@
     UILabel*_timeLable;
     UIView *_lineView;
     UIView *_bottomBarView;
+    ImageDisplayController *_imageDisplayController;
 }
 
 - (id)initWithSinaWeiboModel:(SinaWeiboModel *)model
@@ -405,22 +406,37 @@
 
 - (void)clickImage:(UITapGestureRecognizer *)tap
 {
-    if(_SinaWeiboModel.bmiddle_pic.length == 0) return;
+    if(_SinaWeiboModel.original_pic.length == 0) return;
     
-    UIImageView *imageView = (UIImageView *)[tap view];
-    GHImagePreView *preview = [[GHImagePreView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
-    preview.imageUrl = _SinaWeiboModel.original_pic;
-    [preview showFromView:imageView];
+    NSString *url = _SinaWeiboModel.original_pic;
+    NSArray *array = [[NSArray alloc] initWithObjects:url, nil];
+    NSArray *preArray = [[NSArray alloc] initWithObjects:_originImageView.image, nil];
+    
+    if (_imageDisplayController == nil) {
+        _imageDisplayController = [[ImageDisplayController alloc] initWithImagesUrl:array preImage:preArray];
+        
+    }else{
+        [_imageDisplayController reloadData:array preImage:preArray];
+    }
+    [_imageDisplayController showToView:self.parentViewController.view];
+    
 }
 
 - (void)clickRepostImage:(UITapGestureRecognizer *)tap
 {
-    if(_SinaWeiboModel.sinaRepost.bmiddle_pic.length == 0) return;
+    if(_SinaWeiboModel.sinaRepost.original_pic.length == 0) return;
     
-    UIImageView *imageView = (UIImageView *)[tap view];
-    GHImagePreView *preview = [[GHImagePreView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
-    preview.imageUrl = _SinaWeiboModel.sinaRepost.original_pic;
-    [preview showFromView:imageView];
+    NSString *url = _SinaWeiboModel.sinaRepost.original_pic;
+    NSArray *array = [[NSArray alloc] initWithObjects:url, nil];
+    NSArray *preArray = [[NSArray alloc] initWithObjects:_repostImageView.image, nil];
+
+    if (_imageDisplayController == nil) {
+        _imageDisplayController = [[ImageDisplayController alloc] initWithImagesUrl:array preImage:preArray];
+        
+    }else{
+        [_imageDisplayController reloadData:array preImage:preArray];
+    }
+    [_imageDisplayController showToView:self.parentViewController.view];    
 }
 
 - (void)loadMoreCommemts:(UITapGestureRecognizer *)tap

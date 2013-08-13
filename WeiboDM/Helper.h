@@ -29,4 +29,5 @@ typedef void (^FunctionBlock)(id);
 + (NSString *)downloadFile:(NSString *)url;
 + (UIImage *)downloadImage:(NSString *)url;
 + (UIImage *)snapshotOfView:(UIView *)view;
++ (CGRect)zoomImageRectFromSize:(CGSize)size;
 @end

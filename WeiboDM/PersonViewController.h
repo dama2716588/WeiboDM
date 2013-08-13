@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "PTSinaWeiboClient.h"
 #import "SinaUserModel.h"
+#import "PersonCell.h"
 
-@interface PersonViewController : UIViewController <SinaWeiboDelegate,SinaWeiboRequestDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface PersonViewController : UIViewController <SinaWeiboDelegate,SinaWeiboRequestDelegate,UITableViewDataSource,UITableViewDelegate,PersonCellDelegate>
 
 - (id)initWithSinaUserModel:(SinaUserModel *)sinaUser;
 

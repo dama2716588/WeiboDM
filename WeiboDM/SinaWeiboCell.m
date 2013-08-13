@@ -8,7 +8,6 @@
 
 #import "SinaWeiboCell.h"
 #import "MainViewController.h"
-#import "GHImagePreView.h"
 #import "Helper.h"
 
 #define sinaWeiboMaxTextHeight 80

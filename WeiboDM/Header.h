@@ -45,3 +45,18 @@
 #define C1_COLOR [UIColor colorWithRed:212/255.0f green:75/255.0f blue:42/255.0f alpha:1.00f]
 #define C2_COLOR [UIColor colorWithRed:241/255.0f green:86/255.0f blue:48/255.0f alpha:1.00f]
 #define C3_COLOR [UIColor colorWithRed:254/255.0f green:102/255.0f blue:52/255.0f alpha:1.00f]
+
+
+//#define IS_IPHONE_5 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON )
+//
+//#ifdef IS_IPHONE_5
+//#define SCREEN_HEIGHT 568
+//#else
+//#define SCREEN_HEIGHT 480
+//#endif
+
+#define SCREEN_HEIGHT [[UIScreen mainScreen] bounds].size.height
+
+#define SCREEN_WIDTH  [[UIScreen mainScreen] bounds].size.width
+
+#define INTERFACE_ORIENTATION_NOTIFICATION    @"INTERFACE_ORIENTATION_NOTIFICATION"

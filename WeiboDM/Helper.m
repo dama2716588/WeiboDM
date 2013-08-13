@@ -52,4 +52,47 @@
     }
 }
 
++ (CGRect)zoomImageRectFromSize:(CGSize)size
+{
+    
+    float ratio = size.width / size.height;
+    CGRect rect = CGRectZero;
+    if (size.width <= SCREEN_WIDTH && size.height <= SCREEN_HEIGHT) {
+        rect.size = size;
+        rect.origin = CGPointMake((SCREEN_WIDTH - size.width)/2.0f, (SCREEN_HEIGHT - size.height)/2.0);
+        return rect;
+    }else if (size.width >= SCREEN_WIDTH && size.height < SCREEN_HEIGHT){
+        float height = size.height * SCREEN_WIDTH/size.width;
+        rect.size = CGSizeMake(SCREEN_WIDTH, height);
+        rect.origin = CGPointMake(0, (SCREEN_HEIGHT - height)/2.0);
+        return rect;
+    }else if (size.height >= SCREEN_HEIGHT && size.width < SCREEN_WIDTH){
+        float width = size.width * SCREEN_HEIGHT/size.height;
+        rect.size = CGSizeMake(width, SCREEN_HEIGHT);
+        rect.origin = CGPointMake((SCREEN_WIDTH - width)/2.0f, 0);
+        return rect;
+    }
+    float widthOffset = size.width/SCREEN_WIDTH;
+    float heightOffset = size.height/SCREEN_HEIGHT;
+    
+    if (size.width < SCREEN_WIDTH) {
+        widthOffset = SCREEN_WIDTH/size.width;
+    }
+    if (size.height < SCREEN_HEIGHT) {
+        heightOffset = SCREEN_HEIGHT/size.height;
+    }
+    
+    float width = size.width / widthOffset;
+    float height = size.height / heightOffset;
+    if (widthOffset >= heightOffset) {
+        height = width / ratio;
+    }else{
+        width = height * ratio;
+    }
+    rect.size = CGSizeMake(width,height);
+    rect.origin = CGPointMake((SCREEN_WIDTH - width)/2.0f, (SCREEN_HEIGHT - height)/2.0f);
+    return rect;
+}
+
+
 @end

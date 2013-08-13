@@ -8,8 +8,8 @@
 
 #import "PersonViewController.h"
 #import "JSONKit.h"
-#import "PersonCell.h"
 #import "WeiboDetailViewController.h"
+#import "ImageDisplayController.h"
 
 #define COMMENTS_PER_PAGE @"10"
 
@@ -29,6 +29,8 @@
     int _currentPage;
     UIView *_moreWeiboView;
     UIView *_headerView;
+    
+    ImageDisplayController *_imageDisplayController;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -167,6 +169,20 @@
     NSLog(@"weibo request error : %@",error);
 }
 
+#pragma mark - PersonCellDelegate
+
+-(void)openSmallImages:(NSArray *)imageUrls preImages:(NSArray *)preImages andCurrentIndex:(int)index
+{
+    if (_imageDisplayController == nil) {
+        _imageDisplayController = [[ImageDisplayController alloc] initWithImagesUrl:imageUrls preImage:preImages];
+        
+    }else{
+        [_imageDisplayController reloadData:imageUrls preImage:preImages];
+    }
+    [_imageDisplayController setCurrentIndex:index];
+    [_imageDisplayController showToView:self.parentViewController.view];    
+}
+
 #pragma mark UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _weiboArray.count;
@@ -177,6 +193,7 @@
     PersonCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_IDENTIFIER];
     if (cell == nil) {
         cell = [[PersonCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CELL_IDENTIFIER];
+        cell.delegate = self;
     }
     SinaWeiboModel *commentModel = [_weiboArray objectAtIndex:indexPath.row];
     [cell updateCellWithData:commentModel];
