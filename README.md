@@ -3,7 +3,7 @@ weiboDM
 
 Overview ： A Sina Weibo Client
 
-![Alt text](https://github.com/dama2716588/WeiboDM/blob/master/icon114.png "Optional title")
+![Alt text](https://raw.github.com/dama2716588/WeiboDM/master/icon114.png "Optional title")
 
 Libs :
 
