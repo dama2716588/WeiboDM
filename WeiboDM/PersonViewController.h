@@ -11,7 +11,7 @@
 #import "SinaUserModel.h"
 #import "PersonCell.h"
 
-@interface PersonViewController : UIViewController <SinaWeiboDelegate,SinaWeiboRequestDelegate,UITableViewDataSource,UITableViewDelegate,PersonCellDelegate>
+@interface PersonViewController : UIViewController <SinaWeiboDelegate,SinaWeiboRequestDelegate,UITableViewDataSource,UITableViewDelegate>
 
 - (id)initWithSinaUserModel:(SinaUserModel *)sinaUser;
 

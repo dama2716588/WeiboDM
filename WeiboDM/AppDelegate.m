@@ -16,14 +16,13 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
-    _loginVC = [[LoginViewController alloc] init];
-    _loginVC.delegate = self;
     _optionVC = [[OptionViewController alloc] init];
     _optionVC.delegate = self;
-    [_window setRootViewController:_optionVC];
+    _loginVC = [[LoginViewController alloc] init];
+    _loginVC.delegate = self;
     
     [application setStatusBarStyle:UIStatusBarStyleBlackOpaque];
-    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window setRootViewController:_optionVC];
     [self.window makeKeyAndVisible];
         
     return YES;

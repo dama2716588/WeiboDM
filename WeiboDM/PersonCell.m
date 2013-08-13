@@ -46,11 +46,8 @@
     
     NSMutableArray *_multiImagesArray;
     NSArray *_urls;
-    int _currentPreview;
     
     ImageDisplayController *_imageDisplayController;
-    NSMutableArray *_imageUrls;
-    NSMutableArray *_preImages;    
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -132,9 +129,6 @@
     
     _multiImagesView = [[UIView alloc] init];
     _multiImagesArray = [[NSMutableArray alloc] init];
-    
-    _preImages = [[NSMutableArray alloc] init];
-    _imageUrls = [[NSMutableArray alloc] init];
     
     [self addSubview:_originLabel];
     [self addSubview:_originImageView];
@@ -319,10 +313,6 @@
             _coverHeight += BOOK_COVER_UD + COVER_WIDTH ;
         }
         
-        NSString *thumbnailUrl = [[urlsArray objectAtIndex:j] objectForKey:@"thumbnail_pic"];
-        NSString *largeUrl = [thumbnailUrl stringByReplacingOccurrencesOfString:@"/thumbnail" withString:@"/large"];
-        [_imageUrls addObject:largeUrl];
-        
         UIImageView *bookCover = [[UIImageView alloc] init];        
         [bookCover setImageWithURL:[NSURL URLWithString:[[urlsArray objectAtIndex:j] objectForKey:@"thumbnail_pic"]]];
         bookCover.contentMode = UIViewContentModeScaleAspectFill;
@@ -334,36 +324,9 @@
         [_multiImagesView addSubview:bookCover];
         _lastWidth += COVER_WIDTH + BOOK_COVER_LR;
         
-        if (bookCover.image) {
-            [_preImages addObject:bookCover.image];
-        }        
-        
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickSmallImage:)];
-        [bookCover addGestureRecognizer:tap];
         [_multiImagesArray addObject:bookCover];
     }    
 }
-
-- (void)clickSmallImage:(UITapGestureRecognizer *)tap
-{
-    int index = [[tap view] tag];    
-    
-    if (_delegate && [_delegate respondsToSelector:@selector(openSmallImages:preImages:andCurrentIndex:)]) {
-        [_delegate openSmallImages:_imageUrls preImages:_preImages andCurrentIndex:index];
-    }
-}
-
-//- (void)clickSmallImage:(UITapGestureRecognizer *)tap
-//{
-//    UIImageView *clickedImage = (UIImageView *)[tap view];
-//    _currentPreview = clickedImage.tag;
-//    NSLog(@"_currentPreview : %d",_currentPreview);
-//    
-//    UIWindow *window = [[UIApplication sharedApplication] keyWindow];        
-//    ScrollWebImageView *sw = [[ScrollWebImageView alloc] initWithFrame:window.bounds withUrls:_urls andPreImages:_multiImagesArray];
-//    sw.clickedIndex = _currentPreview;
-//    [sw showFromView:clickedImage];
-//}
 
 + (float)getMultiImageHeight:(SinaWeiboModel *)model
 {
