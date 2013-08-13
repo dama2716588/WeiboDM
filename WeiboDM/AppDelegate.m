@@ -22,6 +22,7 @@
     _loginVC.delegate = self;
     
     [application setStatusBarStyle:UIStatusBarStyleBlackOpaque];
+    [self.window setBackgroundColor:[UIColor whiteColor]];
     [self.window setRootViewController:_optionVC];
     [self.window makeKeyAndVisible];
         
