@@ -115,4 +115,6 @@
     [aView bringSubviewToFront:_menu];
 }
 
+-(void)awesomeMenu:(AwesomeMenu *)menu didSelectIndex:(NSInteger)idx{}
+
 @end

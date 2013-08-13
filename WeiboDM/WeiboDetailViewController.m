@@ -15,6 +15,11 @@
 #import "ImageDisplayController.h"
 
 #define COMMENTS_PER_PAGE @"10"
+#define BOOK_COVER_LR 1 //左右间隔
+#define BOOK_COVER_UD 1 //上下间隔
+#define COVER_WIDTH 70
+#define COVER_HEIGHT 70
+#define FIRST_COVER_MARGIN 1
 
 @interface WeiboContentHeaderView : UIView
 
@@ -78,6 +83,14 @@
     UIView *_lineView;
     UIView *_bottomBarView;
     ImageDisplayController *_imageDisplayController;
+    
+    //多图
+    CGFloat _lastWidth;
+    CGFloat _coverHeight;
+    UIView *_multiImagesView;
+    NSMutableArray *_multiImagesArray;
+    NSMutableArray *_urls;
+    NSMutableArray *_preImages;    
 }
 
 - (id)initWithSinaWeiboModel:(SinaWeiboModel *)model
@@ -89,7 +102,13 @@
         _commentsArray = [NSMutableArray array];        
         _hasMore = YES;
         _currentPage = 1;
-        [self loadWeiboContent];        
+        [self loadWeiboContent];
+        
+        _urls = [NSMutableArray array];
+        _preImages = [NSMutableArray array];
+        _multiImagesArray = [NSMutableArray array];
+       _multiImagesView = [[UIView alloc] init];
+        
     }
     
     return self;
@@ -249,13 +268,22 @@
     
     UITapGestureRecognizer *moreTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadMoreCommemts:)];
     [_moreCommentsView addGestureRecognizer:moreTap];
-        
+    
     [_scrollView addSubview:_pinHeaderView];
     [_scrollView addSubview:_originLabel];
     [_scrollView addSubview:_originImageView];
     [_scrollView addSubview:_repostBg];
     [_scrollView addSubview:_pinFooterView];
-    [_scrollView addSubview:_tableView];
+    [_scrollView addSubview:_tableView];    
+    
+    //add multi images
+    SinaWeiboModel *originModel = _SinaWeiboModel.sinaRepost ? _SinaWeiboModel.sinaRepost : _SinaWeiboModel;
+    if (originModel.pic_urls.count > 1) {
+        [self createMultiImagesView:originModel];
+    } else {
+        [_multiImagesView removeFromSuperview];
+    }    
+    
     [self.view addSubview:_scrollView];
     
     _bottomBarView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.height-90, 320, 90)];
@@ -288,6 +316,81 @@
 {
     [BrowserViewController openWithURL:[linkInfo.URL absoluteString] viewController:self];
     return NO;
+}
+
+- (void)createMultiImagesView:(SinaWeiboModel *)model
+{
+    [_multiImagesView removeAllSubviews];
+    [_multiImagesView removeFromSuperview];
+    [_urls removeAllObjects];
+    [_preImages removeAllObjects];
+    
+    NSArray *urlsArray = model.pic_urls;
+    CGFloat h = [[self class] getMultiImageHeight:model];
+    
+    _multiImagesView.frame = CGRectMake(0, 0, 310, h);
+    
+    _lastWidth = FIRST_COVER_MARGIN;
+    _coverHeight = 0;
+    
+    for (int j=0; j<urlsArray.count; j++)
+    {
+        if (_lastWidth + COVER_WIDTH > 250)
+        {
+            _lastWidth = FIRST_COVER_MARGIN;
+            _coverHeight += BOOK_COVER_UD + COVER_WIDTH ;
+        }
+        
+        NSString *thumbnailUrl = [[urlsArray objectAtIndex:j] objectForKey:@"thumbnail_pic"];
+        NSString *largeUrl = [thumbnailUrl stringByReplacingOccurrencesOfString:@"/thumbnail" withString:@"/large"];
+        [_urls addObject:largeUrl];
+        
+        UIImageView *bookCover = [[UIImageView alloc] init];
+        [bookCover setImageWithURL:[NSURL URLWithString:thumbnailUrl]];
+        bookCover.contentMode = UIViewContentModeScaleAspectFill;
+        bookCover.clipsToBounds = YES;
+        bookCover.frame = CGRectMake(_lastWidth, _coverHeight, COVER_WIDTH, COVER_HEIGHT);
+        bookCover.backgroundColor = [UIColor whiteColor];
+        bookCover.userInteractionEnabled = YES;
+        bookCover.tag = j;
+        [_multiImagesView addSubview:bookCover];
+        _lastWidth += COVER_WIDTH + BOOK_COVER_LR;
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickSmallImage:)];
+        [bookCover addGestureRecognizer:tap];
+        [_multiImagesArray addObject:bookCover];
+        if (bookCover.image) {
+            [_preImages addObject:bookCover.image];
+        }
+    }
+    
+    if (_SinaWeiboModel.pic_urls.count > 1) {
+        [_scrollView addSubview:_multiImagesView];
+    }
+    
+    if (_SinaWeiboModel.sinaRepost.pic_urls.count > 1) {
+        [_repostBg addSubview:_multiImagesView];
+    }
+    
+}
+
++ (float)getMultiImageHeight:(SinaWeiboModel *)model
+{
+    SinaWeiboModel *originModel = model.sinaRepost ? model.sinaRepost : model;
+    
+    if (originModel.pic_urls.count <= 1) {
+        return 0;
+    }
+    
+    if (originModel.pic_urls.count <= 3) {
+        return COVER_HEIGHT;
+    }
+    
+    if (originModel.pic_urls.count <= 6) {
+        return COVER_HEIGHT*2 + BOOK_COVER_UD;
+    }
+    
+    return COVER_HEIGHT*3 + BOOK_COVER_UD*2;
 }
 
 - (void)reloadTableView:(NSNotification *)notify
@@ -376,12 +479,27 @@
         _repostBg.frame = CGRectZero;
     }
     
+    if (_SinaWeiboModel.pic_urls.count > 1) {
+        _originImageView.frame = CGRectZero;
+        _repostImageView.frame = CGRectZero;
+        [_multiImagesView changePosition:CGPointMake(GAP_10, _originLabel.maxY + GAP_10)];
+    }
+    
+    if (_SinaWeiboModel.sinaRepost.pic_urls.count > 1){
+        _originImageView.frame = CGRectZero;
+        _repostImageView.frame = CGRectZero;        
+        [_multiImagesView changePosition:CGPointMake(GAP_10, _repostLabel.maxY + GAP_10)];
+        CGFloat gapH = _SinaWeiboModel.sinaRepost.bmiddle_pic ? GAP_20 : GAP_10;        
+        _repostBg.frame = CGRectMake(GAP_10, _originLabel.maxY + GAP_10, 300, _repostLabel.maxY + _repostImageView.height + _multiImagesView.height + gapH);
+    }
+    
     CGFloat h0 = _originLabel.maxY + GAP_10;
     CGFloat h1 = _SinaWeiboModel.bmiddle_pic ? _originImageView.height +GAP_10 : 0;
     CGFloat h2 = _SinaWeiboModel.sinaRepost.text ? repostSize.height + GAP_30 : 0;
     CGFloat h3 = _SinaWeiboModel.sinaRepost.bmiddle_pic ? _repostImageView.height + GAP_10: 0;
+    CGFloat h4 = _multiImagesView.height + GAP_10;
     
-    _pinFooterView.frame = CGRectMake(0, h0 + h1 + h2 + h3 + GAP_10 , self.view.width, 60);
+    _pinFooterView.frame = CGRectMake(0, h0 + h1 + h2 + h3 + h4 + GAP_10 , self.view.width, 60);
     _pinButton.frame = CGRectMake(10, _pinFooterView.height - GAP_40, 20, 20);
     _pinLable.center = CGPointMake(_pinButton.maxX + _pinLable.width/2 + GAP_10, _pinButton.centerY);
     _zhuanButton.frame = CGRectMake(_pinLable.maxX + GAP_20, _pinFooterView.height - GAP_40, 20, 20);
@@ -391,7 +509,7 @@
     
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 1, 320, 1)];
     lineView.backgroundColor = [UIColor colorWithRed:220/255.0f green:220/255.0f blue:220/255.0f alpha:1.0];
-    [_pinFooterView addSubview:lineView];    
+    [_pinFooterView addSubview:lineView];
     
     // reset frame
     _tableView.frame = CGRectMake(0, _pinFooterView.maxY, self.view.width, _tableView.contentSize.height);
@@ -402,6 +520,20 @@
 {
     PersonViewController *pvc = [[PersonViewController alloc] initWithSinaUserModel:_SinaWeiboModel.sinaUser];
     [self.navigationController pushViewController:pvc animated:YES];
+}
+
+- (void)clickSmallImage:(UITapGestureRecognizer *)tap
+{
+    int index = [[tap view] tag];
+    
+    if (_imageDisplayController == nil) {
+        _imageDisplayController = [[ImageDisplayController alloc] initWithImagesUrl:_urls preImage:_preImages];
+        
+    }else{
+        [_imageDisplayController reloadData:_urls preImage:_preImages];
+    }
+    [_imageDisplayController setCurrentIndex:index];
+    [_imageDisplayController showToView:self.parentViewController.view];
 }
 
 - (void)clickImage:(UITapGestureRecognizer *)tap
@@ -449,7 +581,6 @@
 {
     SinaWeibo *sinaWeibo = _sinaWeiboClient.sinaWeibo;
     NSString *accessToken = sinaWeibo.accessToken;
-    NSLog(@"weibo_access_token:%@",sinaWeibo.accessToken);
     [sinaWeibo requestWithURL:SINA_COMMENTS_SHOW_PATH
                        params:[@{@"access_token":accessToken,@"id":_SinaWeiboModel.mid,@"page":[NSString stringWithFormat:@"%d",_currentPage],@"count":COMMENTS_PER_PAGE} mutableCopy]
                    httpMethod:@"GET"
@@ -465,11 +596,9 @@
     }
     
     for (NSDictionary *dic in commArray) {
-        NSLog(@"comments text : %@",[[dic objectForKey:@"text"] JSONString]);
         SinaCommentsModel *model = [[SinaCommentsModel alloc] initWithDictionary:dic];
         [_commentsArray addObject:model];
     }
-    NSLog(@"_commentsArray : %@",_commentsArray);
     [_tableView reloadData];
     
     _tableView.frame = CGRectMake(_tableView.origin.x, _tableView.origin.y, _tableView.width, _tableView.contentSize.height);
@@ -486,8 +615,8 @@
     return _commentsArray.count;
 }
 
+static NSString *CELL_IDENTIFIER = @"COMMENTS_CELL";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CELL_IDENTIFIER = @"COMMENTS_CELL";
     WeiboCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_IDENTIFIER];
     if (cell == nil) {
         cell = [[WeiboCommentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CELL_IDENTIFIER];
@@ -501,7 +630,6 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     SinaCommentsModel *model = _commentsArray[(NSUInteger) indexPath.row];
-    NSLog(@"weibo_detail_cell_height : %f",[WeiboCommentCell getCellHeight:model]);
     return [WeiboCommentCell getCellHeight:model];
 }
 

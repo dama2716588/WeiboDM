@@ -209,43 +209,6 @@ static float CELL_WIDTH = 0;
 //    [super createAwesomeMenuAbove:_collectionView];
 }
 
-#pragma mark - AwesomeMenuDelegate
-
-- (void)awesomeMenu:(AwesomeMenu *)menu didSelectIndex:(NSInteger)idx
-{
-    NSLog(@"Select the index : %d",idx);
-    SettingViewController *svc = [[SettingViewController alloc] init];
-    
-    switch (idx) {
-        case 0:
-            //
-            break;
-        case 1:
-            //
-            break;
-        case 2:
-            //
-            break;
-        case 3:
-            //
-            break;
-        case 4:
-            [self.navigationController pushViewController:svc animated:YES];
-            break;
-            
-        default:
-            break;
-    }
-    
-}
-- (void)awesomeMenuDidFinishAnimationClose:(AwesomeMenu *)menu {
-    NSLog(@"Menu was closed!");
-}
-- (void)awesomeMenuDidFinishAnimationOpen:(AwesomeMenu *)menu {
-    NSLog(@"Menu is open!");
-}
-
-
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
     _interfaceOrientation = toInterfaceOrientation;
@@ -371,7 +334,6 @@ static float CELL_WIDTH = 0;
     
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     NSArray *allWeibo = [result objectForKey:@"statuses"];
-    NSLog(@"allWeibo : %@",allWeibo);
     
     for (NSDictionary *dic in allWeibo) {
         SinaWeiboModel *weiboModel = [[SinaWeiboModel alloc] initWithDictionary:dic];
