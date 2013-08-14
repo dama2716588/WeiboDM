@@ -1,13 +1,12 @@
 weiboDM
 =======
 
-![Alt text](https://raw.github.com/dama2716588/WeiboDM/master/icon114.png "Logo")
+![Alt text](https://raw.github.com/dama2716588/WeiboDM/master/icon57.png "Logo")
 
 ### Tips:
 
 <pre>
-* Because shouldAutorotate && supportedInterfaceOrientations ara not supportted in ios6,so 
-have to subclass UINavigationController
+* Subclass UINavigationController for autorotation support in iOS 6
 * Use NSOperationQueue for checking the newest weibo data
 * UIViewAdditions Category is very important for Custom UITableViewCell
 * Use GPUImage for image filter
