@@ -216,8 +216,8 @@
     self.view.backgroundColor = [UIColor clearColor];
     
     _toolbar.frame = CGRectMake(0, 0, self.view.width, 40);
-    _locationField.frame = CGRectMake(10, GAP_10-2, _toolbar.width - 100, 40 - GAP_15);
-    _webView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, self.view.height);
+    _locationField.frame = CGRectMake(4, GAP_10-2, _toolbar.width - 96, 40 - GAP_15);
+    _webView.frame = CGRectMake(0, 40, [UIScreen mainScreen].bounds.size.width, self.view.height - 40);
     _stopButton.frame = CGRectMake(_locationField.maxX + GAP_10, 0, 40, 40);
     _reloadButton.frame = CGRectMake(_stopButton.maxX + 2, 0, 40, 40);
     
