@@ -15,7 +15,8 @@
 @interface SinaWeiboModel : BaseModel
 
 @property(nonatomic, assign) int weiboId;              //id
-@property(nonatomic, copy) NSString *mid;              //mid
+@property(nonatomic, strong) NSString *idstr;          //idstr
+@property(nonatomic, copy)   NSString *mid;            //mid
 @property(nonatomic, assign) int comments_count;       //评论数
 @property(nonatomic, assign) int reposts_count;        //转发数
 @property(nonatomic, strong) NSString *thumbnail_pic;  //小图url

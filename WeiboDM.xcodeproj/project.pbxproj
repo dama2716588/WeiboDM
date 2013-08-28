@@ -2914,11 +2914,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: 玉龙 麻 (EW8N6PWKGB)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 玉龙 麻 (EW8N6PWKGB)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WeiboDM/WeiboDM-Prefix.pch";
 				INFOPLIST_FILE = "WeiboDM/WeiboDM-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "FE8DCAEA-ACBE-4C5C-962F-C55A0C142680";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FE8DCAEA-ACBE-4C5C-962F-C55A0C142680";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -2928,11 +2932,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: 玉龙 麻 (EW8N6PWKGB)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 玉龙 麻 (EW8N6PWKGB)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "WeiboDM/WeiboDM-Prefix.pch";
 				INFOPLIST_FILE = "WeiboDM/WeiboDM-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "FE8DCAEA-ACBE-4C5C-962F-C55A0C142680";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FE8DCAEA-ACBE-4C5C-962F-C55A0C142680";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
