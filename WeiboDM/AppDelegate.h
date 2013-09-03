@@ -20,6 +20,8 @@ LoginViewControllerDelegate
 
 //11111
 
+//22222
+
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) DMNavigationController *navVC;
 @property (strong, nonatomic) LoginViewController *loginVC;
