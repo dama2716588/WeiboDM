@@ -18,7 +18,7 @@ OptionViewControllerDelegate,
 LoginViewControllerDelegate
 >
 
-///////////
+/////////
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) DMNavigationController *navVC;
