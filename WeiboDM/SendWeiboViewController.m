@@ -6,6 +6,8 @@
 //  Copyright (c) 2013年 ma yulong. All rights reserved.
 //
 
+//1
+
 #import "SendWeiboViewController.h"
 #import "UIImage+fixOrientation.h"
 #import "UIImage+KIAdditions.h"

@@ -52,4 +52,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Pop Animation
+
+-(void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    //TODO: 
+}
+
+-(UIViewController *)popViewControllerAnimated:(BOOL)animated
+{
+    //FIXME: 
+    return [super popViewControllerAnimated:animated];
+}
+
 @end
