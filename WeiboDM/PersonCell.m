@@ -177,7 +177,7 @@
     __weak __block PersonCell *selfRef = self;
     __weak __block UIImageView *_originImageViewRef = _originImageView;
     __weak __block UIImageView *_repostImageViewRef = _repostImageView;
-        
+    
     [_originImageView setImageWithURL:[NSURL URLWithString:_SinaWeiboModel.bmiddle_pic]
                             completed:^(UIImage *image,NSError *error,SDImageCacheType type){
                                 selfRef.imageScale = 100/image.size.height;
